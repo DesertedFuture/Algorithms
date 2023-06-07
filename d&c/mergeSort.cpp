@@ -6,47 +6,34 @@
 //conquer
 //merge
 
-void merge(int a[], int p, int q, int r){
-	int n1 = q-p+1; //size for left array
-	int n2 = r-q; 	//size for right array
+void merge(int a[], int left, int middle, int right){
+	//sizes to create arrays
+	int const subLeft = middle - left + 1; //size of how many is in left half
+	int const subRight = right - middle; // size of how many is in right half
 
-	int left[ (n1+1)] = {}; //create left array
-	int right[ (n2+1)] = {}; //create right array
+	//arrays used to copy data into
+	int *leftArray = new int[subLeft];
+	int *rightArray = new int[subRight];
 
-	//fill left array with left values
-	for(int i = 0; i < n1; i++){
-		left[i] = a[p+i-1];
+	//copied arrays used to do comparisons 
+	for(int i =0; i < subLeft; i++){
+		leftArray[i] = a[left+i];
+	}
+	for(int j =0; j< subRight; j++){
+		rightArray[j] = a[middle + 1 + j];
 	}
 
-	//fill right array with right values
-	for(int j = 0; j < n2; j++){
-		right[j] = a[q+j];
-	}
+	int leftIndex,rightIndex = 0;
 
-	//set n+1 value to something too great for dataset
-	left[(n1+1)] = 10000000000;
-	right[(n2+1)] = 10000000000;
 
-	int i = 0;
-	int j =0;
-
-	for( int k = p; k < r; k++){
-		if(left[i] <= right[j]){
-			a[k] = left[i];
-			i++;
-		} else {
-			a[k] = right[j];
-			j++;
-		}
-	}
 }
 
-void mergeSort(int a[], int p, int r){
-	if(p < r) {
-		int q = floor((p+r)/2);
-		mergeSort(a,p,q); 
-		mergeSort(a,q+1,r);
-		merge(a,p,q,r);
+void mergeSort(int a[], int left, int right){
+	if(left < right) {
+		int middle = floor((left+right)/2);
+		mergeSort(a,left,middle); 
+		mergeSort(a,middle+1,right);
+		merge(a,left,middle,right);
 	}
 }
 
@@ -65,3 +52,21 @@ int main(int argc, char const *argv[])
 	//7 numbers
 	return 0;
 }
+
+/*
+mergesort
+divide and conquer
+merge sort is broken into dividing, merging, sorting
+one recursive function
+fucntion for merging and sorting
+
+how do i want to divide:
+i want two array of equal length then to call merge on those
+	-i accomplish this by getting beging to middle, then middle +1 to end
+i then call merge on the whole array which takes array, left middle and end
+	-array to actually sort what i want
+	-left to know where to start
+	-middle to know where right hand start is
+	-right to know where to end
+
+*/
