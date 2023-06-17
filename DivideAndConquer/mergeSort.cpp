@@ -36,6 +36,7 @@ void sort(int arr[], int leftIndex, int middle, int rightIndex){
 			index2++;
 		}
 		indexMerged++;
+		
 	}
 
 
